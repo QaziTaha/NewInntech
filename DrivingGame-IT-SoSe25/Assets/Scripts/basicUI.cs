@@ -1,0 +1,35 @@
+using TMPro;
+using UnityEngine;
+
+public class basicUI : MonoBehaviour
+
+{
+
+    [SerializeField]
+    private TMP_Text displayText;
+
+    private bool displayTutorial = true;
+    private bool enableDebug = true;
+
+    private void Start()
+    {
+        displayText.text = "Controls:\n\n\tPress W or ArrowUp to accelerate\n\n\tPress S or ArrowDown to reverse\n\n\tPress Spacebar to brake\n\n\t Press Q and E to shift gears\n\n\tPress P to boost\n\n\tPress R to reset";
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Stop displaying the tutorial text once the car starts moving
+        if (Input.GetAxis("Vertical") != 0)
+            displayTutorial = false;
+
+        if (!displayTutorial && CarController.carHealth > 0)
+            displayText.text = "Speed: " + Mathf.RoundToInt(CarController.carSpeed*10) + " km/h" + "\nHealth: " + Mathf.RoundToInt((float)CarController.carHealth) + "\nNitrus: " + CarController.nitrusValue;
+        displayText.text += "\nGear: " + CarController.gearNum;
+
+        if (CarController.carHealth <= 0)
+            displayText.text = "Oh dear, you are dead!\nPress R to restart";
+        if (enableDebug && !displayTutorial)
+            displayText.text += "\nPower: " + CarController.totalPower + "\nengineRPM: " + CarController.engineRPM;
+    }
+}
