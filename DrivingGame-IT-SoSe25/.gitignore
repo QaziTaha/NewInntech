@@ -1,0 +1,13 @@
+Library/
+Logs/
+obj/
+Temp/
+UserSettings/
+.vs/
+.vscode/
+
+# Maybe these will be needed in the future
+*.sln
+*.vsconfig
+#
+*.csproj
